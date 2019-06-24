@@ -1,0 +1,19 @@
+{
+  "name": "storybot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AncientYears/Story-Bot.git"
+  },
+  "author": "AncientYears & smiley2smiley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AncientYears/Story-Bot/issues"
+  },
+  "homepage": "https://github.com/AncientYears/Story-Bot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
