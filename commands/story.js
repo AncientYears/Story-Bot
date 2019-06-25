@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args) => {
     .addField('Story1', 'A brief summary...')
     .addField('Story2', 'A brief summary...')
     .addField('Story3', 'A brief summary...')
-    .setDescription('?viewstory <story> - Views a story\n?createstory - Creates a story')
+    .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
     .setColor('GREEN')
     message.channel.send(selectStoryEmbed)    
 }
