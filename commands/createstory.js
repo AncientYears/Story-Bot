@@ -2,6 +2,11 @@ const discord = module.require("discord.js")
 
 let storiesJSON = require('../stories.json')
 
+let allStories = [];
+
+
+module.exports = { stories: allStories }
+
 module.exports.run = async (client, message, args) => {
     if (!args[0]) {
 
@@ -51,19 +56,31 @@ module.exports.run = async (client, message, args) => {
                                             .then(collected => {
                                                 let mappedConclusion = collected.map(message => message.content)
 
-
-
-
                                                 let createStoryEmbed = new discord.RichEmbed()
-                                                    .setAuthor('Author: ', message.author.displayAvatarURL)
+                                                    .setAuthor('Author', message.author.displayAvatarURL)
                                                     .addField('Title: ', mappedTitle)
                                                     .addField('Plot: ', '\n' + mappedPlot)
                                                     .addField('Introduction: ', '\n' + mappedIntro)
                                                     .addField('Climax: ', '\n' + mappedClimax)
                                                     .addField('Conclusion: ', '\n' + mappedConclusion)
+                                                    .addField('Author ID: ', '\n' + message.author.id)
                                                     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
                                                     .setColor('GREEN')
-                                                message.channel.send(createStoryEmbed)
+                                                message.channel.send(createStoryEmbed)  
+
+                                                var story = {
+                                                    "author": message.author.username,
+                                                    "title": mappedTitle,
+                                                    "plot": mappedPlot,
+                                                    "introduction": mappedIntro,
+                                                    "climax": mappedClimax,
+                                                    "conclusion": mappedConclusion,
+                                                    "authorid": message.author.id
+                                                }
+
+                                                allStories.unshift(story)
+
+                                                message.channel.send('Stored!')
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
                                     }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
@@ -83,4 +100,5 @@ module.exports.help = {
     //     "plot": "",
     //     "climax": "",
     //     "conclusion": ""
+    //     "author_id": 
     // }
