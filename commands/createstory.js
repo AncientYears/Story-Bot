@@ -15,37 +15,44 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send(createStory).then((msg) => {
 
-        message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
-            .then(collected => {
 
+        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+            .then(collected => {
+            
+            msg.edit(createStory).catch(e => console.log(e))    
             createStory.setAuthor('Create A New Plot', client.user.displayAvatarURL),
             createStory.setDescription('Write a new plot for your story (bear in mind the character limit is 2000!)')
-            msg.edit(createStory).catch(e => console.log(e))
+        msg.edit(createStory).catch(e => console.log(e))    
+            
 
-        message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
+        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
             .then(collected => { 
 
-        msg.edit(createStory).catch(e => console.log(e))
             createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
             createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
+        msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 1, time: 6000, errors: ['time'] })
+        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
             .then(collected => {
 
         msg.edit(createStory).catch(e => console.log(e))
-        createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
-        createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 2000!)'),
+            createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
+            createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 2000!)'),
+        msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 1, time: 6000, errors: ['time'] })
+        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
             .then(collected => {
 
-        msg.edit(createStory).catch(e => console.log(e))
+        
             createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
         msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 1, time: 6000, errors: ['time'] })
+        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
             .then(collected => {
+
+                
+
 
     let createStoryEmbed = new discord.RichEmbed()
     .setAuthor('Author: ', message.author.displayAvatarURL) 
@@ -57,6 +64,7 @@ module.exports.run = async (client, message, args) => {
     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
     .setColor('GREEN')
     message.channel.send(createStoryEmbed)
+
 }).catch(e => console.log(e))
 }).catch(e => console.log(e))
 }).catch(e => console.log(e))
