@@ -42,6 +42,7 @@ module.exports.run = async (client, message, args) => {
         msg.edit(createStory).catch(e => console.log(e))
             createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
+        msg.edit(createStory).catch(e => console.log(e))
 
         message.channel.awaitMessages(filter, { max: 1, time: 6000, errors: ['time'] })
             .then(collected = userConclusion)
