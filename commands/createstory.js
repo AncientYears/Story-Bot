@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(createStory).then((msg) => {
 
 
-        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+        message.channel.awaitMessages(filter, { max: 10, time: 5000, errors: ['time'] })
             .then(collected => {
             
             msg.edit(createStory).catch(e => console.log(e))    
@@ -25,30 +25,29 @@ module.exports.run = async (client, message, args) => {
         msg.edit(createStory).catch(e => console.log(e))    
             
 
-        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+        message.channel.awaitMessages(filter, { max: 10, time: 5000, errors: ['time'] })
             .then(collected => { 
 
             createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
             createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
         msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+        message.channel.awaitMessages(filter, { max: 10, time: 5000, errors: ['time'] })
             .then(collected => {
 
-        msg.edit(createStory).catch(e => console.log(e))
+        
             createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
             createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 2000!)'),
         msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+        message.channel.awaitMessages(filter, { max: 10, time: 5000, errors: ['time'] })
             .then(collected => {
 
-        
             createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
         msg.edit(createStory).catch(e => console.log(e))
 
-        message.channel.awaitMessages(filter, { max: 10, time: 2000, errors: ['time'], min: 5 })
+        message.channel.awaitMessages(filter, { max: 10, time: 5000, errors: ['time'] })
             .then(collected => {
 
                 
