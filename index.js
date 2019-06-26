@@ -33,7 +33,7 @@ client.on(`message`, message => {
   
 	let args = message.content.slice(prefix.length).trim().split(/ +/);
 	let cmdname = args.shift().toLowerCase();
-  let cmd = client.commands.get(cmdname) || client.commands.find(com => com.help.aliases && com.help.aliases.includes(cmdname));
+  let cmd = client.commands.get(cmdname)
 
   if(cmd) {
     cmd.run(client, message, args);

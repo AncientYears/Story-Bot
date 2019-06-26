@@ -12,11 +12,16 @@ module.exports.run = async (client, message, args) => {
     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
     .setColor('GREEN')
     message.channel.send(selectStoryEmbed)    
+} else if(args.join(' ')) {
+    // Search for the story in the json file 
+    console.log(storiesJSON)
+    message.channel.send(args.join(' '))
 }
+
+
 }
 module.exports.help = {    
     name: 'story',
-    aliases: ['']
     }
 
     // {
