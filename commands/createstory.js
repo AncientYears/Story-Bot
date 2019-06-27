@@ -91,14 +91,14 @@ module.exports.run = async (client, message, args, pool) => {
                                                     let newStorArray = []
                                                     newStorArray.push(currentStory, story)
                                                     let merged = [].concat.apply([], newStorArray);
-                                                    console.log(merged)
+                                                    //console.log(merged)
                                                     let newJSON = JSON.stringify(merged)
-                                                    console.log(newJSON)
+                                                    //console.log(newJSON)
                                                     return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
                                                 }
 
                                             //    let newStory = story.concat(currentStory)
-                                             //   let storyJSON = JSON.stringify(newStory)
+                                             //   let storyJSON = JSON.stringify(newStory)              < --- deprecated
 
                                                 //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`)
                                                 //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
