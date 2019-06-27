@@ -77,23 +77,39 @@ module.exports.run = async (client, message, args, pool) => {
                                                 }
 
                                                 
-                                                let currentStory = pool.query(`SELECT storyJSON WHERE id = '${message.author.id}'`)
+                                                pool.query(`SELECT * FROM stories WHERE id = '${message.author.id}'`, function (error, results, fields) {
+                                                    if (error) throw error;
+                                                
+                                                let currentStory = results[0].storyJSON
                                                 currentStory = JSON.parse(currentStory)
-                                                let newStory = story.concat(currentStory)
 
-                                                let storyJSON = JSON.stringify(newStory)
+                                                if (currentStory === null) {
+                                                    let storyString = JSON.stringify(story)
+                                                    return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
+                                                } else {
+                                                    
+                                                    let newStorArray = []
+                                                    newStorArray.push(currentStory, story)
+                                                    newStorArray.flat(2)
+                                                    let newJSON = JSON.stringify(newStorArray)
+                                                    console.log(newJSON)
+                                                    return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
+                                                }
 
-                                                pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`)
+                                            //    let newStory = story.concat(currentStory)
+                                             //   let storyJSON = JSON.stringify(newStory)
+
+                                                //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`)
                                                 //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
                                                     
-                                               
+                                                })
                                                 //allStories.unshift(story)
 
-                                            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
-                                    }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
-                            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
-                    }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
-            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
+                                            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
+                                    }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
+                            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
+                    }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
+            }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
     }
 }
 module.exports.help = {
