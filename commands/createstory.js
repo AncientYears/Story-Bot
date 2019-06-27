@@ -75,8 +75,9 @@ module.exports.run = async (client, message, args, pool) => {
                                                     "climax": mappedClimax,
                                                     "conclusion": mappedConclusion,
                                                 }
+
                                                 let storyJSON = JSON.stringify(story)
-                                                pool.query(`INSERT IGNORE INTO \`stories\` (\`storyJSON\`) VALUES (${storyJSON})`);
+                                                pool.query(`INSERT IGNORE INTO stories SET storyJSON = '${storyJSON}'`);
                                                 //allStories.unshift(story)
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
