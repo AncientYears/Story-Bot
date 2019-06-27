@@ -10,12 +10,15 @@ module.exports.run = async (client, message, args, pool) => {
         let selectStoryEmbed = new discord.RichEmbed()
         pool.query(`SELECT * FROM stories`, function (error, results, fields) {
             if (error) throw error;
-            console.log(results.length)
 
             for (i = 0; i < results.length; i++) {
             let storyJSON = results[i].storyJSON
-            let storyObj = JSON.parse(storyJSON)
+            if(storyJSON){
+                console.log(storyJSON)
+                let storyObj = JSON.parse(storyJSON)
                 storyStorage.push((i + 1) + storyObj.title, (i + 1) + storyObj.plot)
+            }
+          
 
             // if (selectStoryEmbed.fields)
             // selectStoryEmbed.addField(storyObj.title, storyObj.plot)
@@ -23,6 +26,9 @@ module.exports.run = async (client, message, args, pool) => {
         }
             console.log(storyStorage)
             selectStoryEmbed.setAuthor('Stories', client.user.displayAvatarURL)    
+            for(i = 0; i < storyStorage.length; i++){
+                selectStoryEmbed.addField(storyStorage[i])
+            }
             selectStoryEmbed.setColor('GREEN')
             message.channel.send(selectStoryEmbed)    
 
