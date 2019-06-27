@@ -76,35 +76,25 @@ module.exports.run = async (client, message, args, pool) => {
                                                     "conclusion": mappedConclusion,
                                                 }
 
-                                                
+
                                                 pool.query(`SELECT * FROM stories WHERE id = '${message.author.id}'`, function (error, results, fields) {
                                                     if (error) throw error;
-                                                
-                                                let currentStory = results[0].storyJSON
-                                                currentStory = JSON.parse(currentStory)
 
-                                                if (currentStory === null) {
-                                                    let storyString = JSON.stringify(story)
-                                                    return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
-                                                } else {
-                                                    
-                                                    let newStorArray = []
-                                                    newStorArray.push(currentStory, story)
-                                                    let merged = [].concat.apply([], newStorArray);
-                                                    //console.log(merged)
-                                                    let newJSON = JSON.stringify(merged)
-                                                    //console.log(newJSON)
-                                                    return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
-                                                }
+                                                    let currentStory = results[0].storyJSON
+                                                    currentStory = JSON.parse(currentStory)
 
-                                            //    let newStory = story.concat(currentStory)
-                                             //   let storyJSON = JSON.stringify(newStory)              < --- deprecated
+                                                    if (currentStory === null) {
+                                                        let storyString = JSON.stringify(story)
+                                                        return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
+                                                    } else {
 
-                                                //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`)
-                                                //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
-                                                    
+                                                        let newStorArray = []
+                                                        newStorArray.push(currentStory, story)
+                                                        let merged = [].concat.apply([], newStorArray);
+                                                        let newJSON = JSON.stringify(merged)
+                                                        return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
+                                                    }
                                                 })
-                                                //allStories.unshift(story)
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
                                     }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
