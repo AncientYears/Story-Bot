@@ -90,8 +90,9 @@ module.exports.run = async (client, message, args, pool) => {
                                                     
                                                     let newStorArray = []
                                                     newStorArray.push(currentStory, story)
-                                                    newStorArray.flat(2)
-                                                    let newJSON = JSON.stringify(newStorArray)
+                                                    let merged = [].concat.apply([], newStorArray);
+                                                    console.log(merged)
+                                                    let newJSON = JSON.stringify(merged)
                                                     console.log(newJSON)
                                                     return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
                                                 }
