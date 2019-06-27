@@ -66,7 +66,7 @@ module.exports.run = async (client, message, args) => {
                                                     .addField('Author ID: ', '\n' + message.author.id)
                                                     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
                                                     .setColor('GREEN')
-                                                message.channel.send(createStoryEmbed)  
+                                                message.channel.send(createStoryEmbed)
 
                                                 var story = {
                                                     "author": message.author.username,
@@ -80,8 +80,6 @@ module.exports.run = async (client, message, args) => {
 
                                                 allStories.unshift(story)
 
-                                                message.channel.send('Stored!')
-
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
                                     }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
@@ -92,13 +90,3 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
     name: 'createstory'
 }
-
-    // {
-    //     "author": "",
-    //     "title": "", 
-    //     "introduction": "",
-    //     "plot": "",
-    //     "climax": "",
-    //     "conclusion": ""
-    //     "author_id": 
-    // }
