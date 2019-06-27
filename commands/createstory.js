@@ -77,7 +77,7 @@ module.exports.run = async (client, message, args, pool) => {
                                                 }
 
                                                 let storyJSON = JSON.stringify(story)
-                                                pool.query(`INSERT IGNORE INTO stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
+                                                pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
                                                 //allStories.unshift(story)
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
