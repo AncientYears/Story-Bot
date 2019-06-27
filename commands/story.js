@@ -3,7 +3,11 @@ const discord = module.require("discord.js")
 let storiesJSON = require('../stories.json')
 let allStories = require('./createstory').stories
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, pool) => {        
+    pool.getConnection(function(err, connection) {
+
+
+
     if (!args[0]) { 
     let selectStoryEmbed = new discord.RichEmbed()
     .setAuthor('Stories', client.user.displayAvatarURL)    
@@ -20,8 +24,7 @@ module.exports.run = async (client, message, args) => {
     console.log(storiesJSON)
     message.channel.send(args.join(' '))
 }
-
-
+})
 }
 module.exports.help = {    
     name: 'story',

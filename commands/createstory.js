@@ -7,7 +7,7 @@ let allStories = [];
 
 module.exports = { stories: allStories }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, pool) => {
     if (!args[0]) {
 
         let filter = m => m.author.id == message.author.id;
@@ -63,22 +63,21 @@ module.exports.run = async (client, message, args) => {
                                                     .addField('Introduction: ', '\n' + mappedIntro)
                                                     .addField('Climax: ', '\n' + mappedClimax)
                                                     .addField('Conclusion: ', '\n' + mappedConclusion)
-                                                    .addField('Author ID: ', '\n' + message.author.id)
                                                     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
                                                     .setColor('GREEN')
                                                 message.channel.send(createStoryEmbed)
 
                                                 var story = {
-                                                    "author": message.author.username,
+                                                    "author": message.author.tag,
                                                     "title": mappedTitle,
                                                     "plot": mappedPlot,
                                                     "introduction": mappedIntro,
                                                     "climax": mappedClimax,
                                                     "conclusion": mappedConclusion,
-                                                    "authorid": message.author.id
                                                 }
-
-                                                allStories.unshift(story)
+                                                let storyJSON = JSON.stringify(story)
+                                                pool.query(`INSERT IGNORE INTO \`stories\` (\`storyJSON\`) VALUES (${storyJSON})`);
+                                                //allStories.unshift(story)
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
                                     }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
