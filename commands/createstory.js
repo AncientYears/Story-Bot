@@ -76,8 +76,17 @@ module.exports.run = async (client, message, args, pool) => {
                                                     "conclusion": mappedConclusion,
                                                 }
 
-                                                let storyJSON = JSON.stringify(story)
-                                                pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
+                                                
+                                                let currentStory = pool.query(`SELECT storyJSON WHERE id = '${message.author.id}'`)
+                                                currentStory = JSON.parse(currentStory)
+                                                let newStory = story.concat(currentStory)
+
+                                                let storyJSON = JSON.stringify(newStory)
+
+                                                pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`)
+                                                //pool.query(`UPDATE stories SET storyJSON = '${storyJSON}' WHERE id = '${message.author.id}'`);
+                                                    
+                                               
                                                 //allStories.unshift(story)
 
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories'))
