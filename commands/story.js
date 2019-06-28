@@ -3,57 +3,70 @@ const discord = module.require("discord.js")
 let storiesJSON = require('../stories.json')
 let allStories = require('./createstory').stories
 
-storyStorage = []
+module.exports.run = async (client, message, args, pool) => {
+  if (!args[0]) {
+    let selectStoryEmbed = new discord.RichEmbed()
+    message.channel.send(selectStoryEmbed).then(embedMessage => {
+    pool.query(`SELECT * FROM stories`, function (error, results, fields) {
+      if (error) throw error;
 
-module.exports.run = async (client, message, args, pool) => {        
-    if (!args[0]) { 
-        let selectStoryEmbed = new discord.RichEmbed()
-        pool.query(`SELECT * FROM stories`, function (error, results, fields) {
-            if (error) throw error;
+      for (i = 0; i < results.length; i++) {
 
-            for (i = 0; i < results.length; i++) {
-            if(results[i].storyJSON) {
+        if (results[i].storyJSON) {
 
-                let storyJSON = results[i].storyJSON
+          let storyJSON = results[i].storyJSON
+          let parsedStory = JSON.parse(storyJSON)
 
-                let parsedStory = JSON.parse(storyJSON)
+          for (inner = 0; inner < parsedStory.length; inner++) {
+            if (selectStoryEmbed.fields.length > 3) {
+              console.log(parsedStory[inner].title)
+              embedMessage.react("▶")
+              let filter = (reaction, user) => {
+                return ['◀', '▶'].includes(reaction.emoji.name) && user.id === message.author.id;
+            };
 
-                if (parsedStory[i] !== undefined) {
-                console.log(parsedStory[i])
-                }
-            }
-            //    titles.push(parsedStory[i].title)
-          //      plots.push(parsedStory[i].plot)
+            embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+    .then(collected => {
+        const reaction = collected.first();
 
-            //    console.log(titles)
-            //    console.log(plots)
-                  //  selectStoryEmbed.addField(parsedStory[i].title, parsedStory[i].plot)
-                 
+        if (reaction.emoji.name === '▶') {
+          let reacted = reaction.users.find(user => user.id === message.author.id)
 
-
-
-         //       let storyObj = JSON.parse(storyJSON)
-              //  storyStorage.push((i + 1) + storyObj.title, (i + 1) + storyObj.plot)
-            
+              for (inin = 0; inin < 3; inin++) {
+              selectStoryEmbed.fields[inin].name = `${parsedStory[inner].title}`
+              selectStoryEmbed.fields[inin].value = `${parsedStory[inner].plot}`
+              embedMessage.edit(selectStoryEmbed)
+              }
+              reaction.remove(reacted.id)
+              embedMessage.react("◀")
         }
-      //      console.log(storyStorage)
-     //       selectStoryEmbed.setAuthor('Stories', client.user.displayAvatarURL)    
-       //     for(i = 0; i < storyStorage.length; i++){
-      //          selectStoryEmbed.addField(storyStorage[i])
-        //    }
+        else {
+            message.reply('Foward');
+        }
+    })
+    .catch(collected => {
+    });
+
+            } else {
+            selectStoryEmbed.addField(parsedStory[inner].title, parsedStory[inner].plot)
+            selectStoryEmbed.setAuthor('Stories', client.user.displayAvatarURL)
             selectStoryEmbed.setColor('GREEN')
-            message.channel.send(selectStoryEmbed)    
+            embedMessage.edit(selectStoryEmbed)
+          }
+          }
+        }
+      }
+    });
+    })
 
-        })
-
-} else if(args.join(' ')) {
+  } else if (args.join(' ')) {
     // Search for the story in the json file 
     console.log(storiesJSON)
     message.channel.send(args.join(' '))
-}
+  }
 }
 
-module.exports.help = {    
-    name: 'story',
-    }
+module.exports.help = {
+  name: 'story',
+}
 
