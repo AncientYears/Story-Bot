@@ -21,12 +21,13 @@ The premise of the bot is a user can create, store and view their short stories 
 ?help - provides a very basic help command
 
 ?mystories - provides a list of the own users stories
+```
 
-** ?story - provides a list of all stories sorted by new ** this is a WIP feature that is still very buggy, don't attempt to use this, instead, use below**
+** ?story - provides a list of all stories sorted by new ** this is a WIP feature that is still very buggy, don't attempt to use this, instead, use below! V
 
     ?story @user - provides a list of all stories by that user
     ?story @user storyname - provides a viewing platform for that specific story
-
+```
 ?createstory - allows a user to create a story in the individual parts
     usage as follows:
         ?createstory
