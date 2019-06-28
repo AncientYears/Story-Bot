@@ -12,23 +12,35 @@ module.exports.run = async (client, message, args, pool) => {
             if (error) throw error;
 
             for (i = 0; i < results.length; i++) {
-            let storyJSON = results[i].storyJSON
-            if(storyJSON){
-                console.log(storyJSON)
-                let storyObj = JSON.parse(storyJSON)
-                storyStorage.push((i + 1) + storyObj.title, (i + 1) + storyObj.plot)
-            }
-          
+            if(results[i].storyJSON) {
 
-            // if (selectStoryEmbed.fields)
-            // selectStoryEmbed.addField(storyObj.title, storyObj.plot)
-            // console.log(selectStoryEmbed.fields[i])
-        }
-            console.log(storyStorage)
-            selectStoryEmbed.setAuthor('Stories', client.user.displayAvatarURL)    
-            for(i = 0; i < storyStorage.length; i++){
-                selectStoryEmbed.addField(storyStorage[i])
+                let storyJSON = results[i].storyJSON
+
+                let parsedStory = JSON.parse(storyJSON)
+
+                if (parsedStory[i] !== undefined) {
+                console.log(parsedStory[i])
+                }
             }
+            //    titles.push(parsedStory[i].title)
+          //      plots.push(parsedStory[i].plot)
+
+            //    console.log(titles)
+            //    console.log(plots)
+                  //  selectStoryEmbed.addField(parsedStory[i].title, parsedStory[i].plot)
+                 
+
+
+
+         //       let storyObj = JSON.parse(storyJSON)
+              //  storyStorage.push((i + 1) + storyObj.title, (i + 1) + storyObj.plot)
+            
+        }
+      //      console.log(storyStorage)
+     //       selectStoryEmbed.setAuthor('Stories', client.user.displayAvatarURL)    
+       //     for(i = 0; i < storyStorage.length; i++){
+      //          selectStoryEmbed.addField(storyStorage[i])
+        //    }
             selectStoryEmbed.setColor('GREEN')
             message.channel.send(selectStoryEmbed)    
 
