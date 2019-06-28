@@ -59,9 +59,37 @@ module.exports.run = async (client, message, args, pool) => {
     });
     })
 
-  } if(args[0]){
+  } if(args[1]){
     let specifiedAuthor = message.guild.members.get(args[0])
-    console.log(specifiedAuthor)
+    let specificStoryEmbed = new discord.RichEmbed()
+    .setColor('GREEN')
+    .setAuthor(args[1], specifiedAuthor.user.displayAvatarURL)
+    pool.query(`SELECT * FROM stories WHERE id = '${args[0]}'`, function (error, results, fields) {
+      if(error) throw error;
+              let storyStorage = []
+              for(i = 0; i < results.length; i++){
+                  if(results[i].storyJSON){
+                      let storyObj = JSON.parse(results[i].storyJSON.split(","))
+                      for(i = 0; i < storyObj.length; i++) {
+                          storyStorage.push(storyObj[i])
+                      }   
+                  }
+                  
+              }
+              for(i = 0; i < storyStorage.length; i++){
+                  if(storyStorage[i].title == args[1]){   
+                      specificStoryEmbed.addField('Introduction: ', storyStorage[i].introduction)
+                      specificStoryEmbed.addField('Climax: ', storyStorage[i].climax)
+                      specificStoryEmbed.addField('Conclusion: ', storyStorage[i].conclusion)
+                  }
+              }
+              message.channel.send(specificStoryEmbed)
+              
+          })
+      
+  }
+  else if(args[0]){
+    let specifiedAuthor = message.guild.members.get(args[0])
     let specificStoryEmbed = new discord.RichEmbed()
 
     .setAuthor(specifiedAuthor.user.username + "'s stories", specifiedAuthor.user.displayAvatarURL)
@@ -89,7 +117,9 @@ module.exports.run = async (client, message, args, pool) => {
         
     })
 }
+
 }
+
 
 
 
