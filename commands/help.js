@@ -1,7 +1,5 @@
 const discord = module.require("discord.js")
 
-let storiesJSON = require('../stories.json')
-
 module.exports.run = async (client, message, args) => {
     if (!args[0]) { 
     let helpEmbed = new discord.RichEmbed()

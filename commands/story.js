@@ -1,8 +1,5 @@
 const discord = module.require("discord.js")
 
-let storiesJSON = require('../stories.json')
-let allStories = require('./createstory').stories
-
 module.exports.run = async (client, message, args, pool) => {
   if (!args[0]) {
     let pageStories = []
