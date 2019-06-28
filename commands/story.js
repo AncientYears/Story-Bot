@@ -87,12 +87,12 @@ module.exports.run = async (client, message, args, pool) => {
                       specificStoryEmbed.addField('Introduction: ', storyStorage[i].introduction)
                       specificStoryEmbed.addField('Climax: ', storyStorage[i].climax)
                       specificStoryEmbed.addField('Conclusion: ', storyStorage[i].conclusion)
-                  }
-                  else{
-                    b = b + 1;
+                      b = 0
+                  }else if(storyStorage[i] != args[1]){
+                    b = b + 1
                   }
               }
-              if(b = storyStorage.length){
+              if(b === storyStorage.length){
                 specificStoryEmbed.addField('Could not find that story!', 'Sorry!')
               }
               message.channel.send(specificStoryEmbed)
