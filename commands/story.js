@@ -5,7 +5,8 @@ let allStories = require('./createstory').stories
 
 module.exports.run = async (client, message, args, pool) => {
   if (!args[0]) {
-
+    let pageStories = []
+    let pages
     let selectStoryEmbed = new discord.RichEmbed()
     .setColor('GREEN')
 
@@ -13,13 +14,22 @@ module.exports.run = async (client, message, args, pool) => {
 
     pool.query(`SELECT * FROM stories`, function (error, results, fields) {
       if (error) throw error;
-      for (i = 0; i < results.length; i++) {
-        if (results[i].storyJSON) {
-
-          let pages = JSON.parse(results[i].storyJSON)
-          console.log(pages.length)
+      
+      for(i = 0; i < results.length; i++){
+        if(results[i].storyJSON){
+          pages = JSON.parse(results[i].storyJSON.split(","))
+        }
+      }
+      for (i = 0; i < pages.length; i++) {
+        pageStories.push(pages[i])
+      }
+      for(i = 0; i < 5; i++) {
+        if(pageStories[i]){
+          console.log(pageStories[i].title)
+          selectStoryEmbed.addField(pageStories[i].title, pageStories[i].author)
+        }
+      }
           let page = 1
-          
           selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
           embedMessage.edit(selectStoryEmbed)
 
@@ -38,6 +48,11 @@ module.exports.run = async (client, message, args, pool) => {
               page--;
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
               embedMessage.edit(selectStoryEmbed)
+              
+              for(i = (5 / page); i < 5; i++){
+                selectStoryEmbed.field[i].name = pageStories[i].title 
+                selectStoryEmbed.field[i].value = pageStories[i].author
+              }
 
             })
 
@@ -46,10 +61,13 @@ module.exports.run = async (client, message, args, pool) => {
               page++;
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
               embedMessage.edit(selectStoryEmbed)
-
+              for(i = 4; i < (page * 5); i++){
+                selectStoryEmbed.field[i].name = pageStories[i].title 
+                selectStoryEmbed.field[i].value = pageStories[i].author
+              }
             })
-        }
-      }
+        
+      
     })
     })
 
