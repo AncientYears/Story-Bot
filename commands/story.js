@@ -8,6 +8,7 @@ module.exports.run = async (client, message, args, pool) => {
     let pageStories = []
     let pages = []
     let page = 1
+    let perPage = 3
     let selectStoryEmbed = new discord.RichEmbed()
     .setColor('GREEN')
 
@@ -23,9 +24,8 @@ module.exports.run = async (client, message, args, pool) => {
         }
       }
       let merged = [].concat.apply([], pages)
-      for(i = 0; i < 5; i++) {
+      for(i = perPage-3; i < perPage; i++) {
         if(merged[i]){
-          console.log(merged[i])
           selectStoryEmbed.addField(merged[i].title, merged[i].author)
         }
       }
@@ -45,28 +45,34 @@ module.exports.run = async (client, message, args, pool) => {
             backwards.on('collect', r => {
               if (page === 1) return;
               page--;
+              perPage -= 3
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
-              embedMessage.edit(selectStoryEmbed)
-              
-              for(i = (5 / page); i < 5; i++){
-                selectStoryEmbed.field[i].name = pageStories[i].title 
-                selectStoryEmbed.field[i].value = pageStories[i].author
-              }
+              for (i = perPage-3; i < perPage; i++) {
+                for (iv = 0; iv < 3; iv++) {
+                  console.log(selectStoryEmbed.fields)
+                  selectStoryEmbed.fields[iv].name = merged[i].title 
+               selectStoryEmbed.fields[iv].value = merged[i].author
 
+              }
+              embedMessage.edit(selectStoryEmbed)
+            }
             })
 
             forwards.on('collect', r => {
               if (page === pages.length) return;
               page++;
+              perPage += 3
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
-              embedMessage.edit(selectStoryEmbed)
-              for(i = 4; i < (page * 5); i++){
-                selectStoryEmbed.field[i].name = pageStories[i].title 
-                selectStoryEmbed.field[i].value = pageStories[i].author
+              for (i = perPage-3; i < perPage; i++) {
+                for (iv = 0; iv < 3; iv++) {
+                  console.log(selectStoryEmbed.fields)
+                  selectStoryEmbed.fields[iv].name = merged[i].title 
+               selectStoryEmbed.fields[iv].value = merged[i].author
+
               }
+              embedMessage.edit(selectStoryEmbed)
+            }
             })
-        
-      
     })
     })
 
