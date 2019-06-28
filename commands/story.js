@@ -60,6 +60,11 @@ module.exports.run = async (client, message, args, pool) => {
     })
 
   } if(args[1]){
+    let totalargs = []
+    args.forEach(element => {
+      if(!(element == args[0]))
+      totalargs.push(element)
+    });
     let b = 0;
     let userID = args[0].split("@").pop()
     userID = userID.split(">").shift()
@@ -68,7 +73,7 @@ module.exports.run = async (client, message, args, pool) => {
     console.log(specifiedAuthor)
     let specificStoryEmbed = new discord.RichEmbed()
     .setColor('GREEN')
-    .setAuthor(args[1], specifiedAuthor.user.displayAvatarURL)
+    .setAuthor(totalargs.join(' '), specifiedAuthor.user.displayAvatarURL)
     pool.query(`SELECT * FROM stories WHERE id = '${userID}'`, function (error, results, fields) {
       if(error) throw error;
               let storyStorage = []
@@ -83,12 +88,12 @@ module.exports.run = async (client, message, args, pool) => {
                   
               }
               for(i = 0; i < storyStorage.length; i++){
-                  if(storyStorage[i].title == args[1]){   
+                  if(storyStorage[i].title == totalargs.join(' ')){   
                       specificStoryEmbed.addField('Introduction: ', storyStorage[i].introduction)
                       specificStoryEmbed.addField('Climax: ', storyStorage[i].climax)
                       specificStoryEmbed.addField('Conclusion: ', storyStorage[i].conclusion)
                       b = 0
-                  }else if(storyStorage[i] != args[1]){
+                  }else if(storyStorage[i] != totalargs.join(' ')){
                     b = b + 1
                   }
               }
