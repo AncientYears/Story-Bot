@@ -6,7 +6,8 @@ let allStories = require('./createstory').stories
 module.exports.run = async (client, message, args, pool) => {
   if (!args[0]) {
     let pageStories = []
-    let pages
+    let pages = []
+    let page = 1
     let selectStoryEmbed = new discord.RichEmbed()
     .setColor('GREEN')
 
@@ -16,21 +17,18 @@ module.exports.run = async (client, message, args, pool) => {
       if (error) throw error;
       
       for(i = 0; i < results.length; i++){
+        //console.log(results[i])
         if(results[i].storyJSON){
-          pages = JSON.parse(results[i].storyJSON.split(","))
-          console.log(pages)
+          pages.push(JSON.parse(results[i].storyJSON.split(",")))
         }
       }
-      for (i = 0; i < pages.length; i++) {
-        pageStories.push(pages[i])
-      }
+      let merged = [].concat.apply([], pages)
       for(i = 0; i < 5; i++) {
-        if(pageStories[i]){
-          console.log(pageStories[i].title)
-          selectStoryEmbed.addField(pageStories[i].title, pageStories[i].author)
+        if(merged[i]){
+          console.log(merged[i])
+          selectStoryEmbed.addField(merged[i].title, merged[i].author)
         }
       }
-          let page = 1
           selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
           embedMessage.edit(selectStoryEmbed)
 
