@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args, pool) => {
 
         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
             .then(collected => {
-                let mappedTitle = collected.map(message => message.content)
+                let mappedTitle = collected.map(message => message.content).join()
 
                 createStory.setAuthor('Create A New Plot', client.user.displayAvatarURL),
                     createStory.setDescription('Write a new plot for your story (bear in mind the character limit is 2000!)')
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args, pool) => {
 
                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                     .then(collected => {
-                        mappedPlot = collected.map(message => message.content)
+                        mappedPlot = collected.map(message => message.content).join()
 
                         createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
                             createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args, pool) => {
 
                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                             .then(collected => {
-                                let mappedIntro = collected.map(message => message.content)
+                                let mappedIntro = collected.map(message => message.content).join()
 
 
                                 createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
@@ -46,7 +46,7 @@ module.exports.run = async (client, message, args, pool) => {
 
                                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                     .then(collected => {
-                                        let mappedClimax = collected.map(message => message.content)
+                                        let mappedClimax = collected.map(message => message.content).join()
 
                                         createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
                                             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
@@ -54,7 +54,7 @@ module.exports.run = async (client, message, args, pool) => {
 
                                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                             .then(collected => {
-                                                let mappedConclusion = collected.map(message => message.content)
+                                                let mappedConclusion = collected.map(message => message.content).join()
 
                                                 let createStoryEmbed = new discord.RichEmbed()
                                                     .setAuthor('Author', message.author.displayAvatarURL)
@@ -75,8 +75,7 @@ module.exports.run = async (client, message, args, pool) => {
                                                     "climax": mappedClimax,
                                                     "conclusion": mappedConclusion,
                                                 }
-
-
+                                                console.log(story)
                                                 pool.query(`SELECT * FROM stories WHERE id = '${message.author.id}'`, function (error, results, fields) {
                                                     if (error) throw error;
 
@@ -84,8 +83,11 @@ module.exports.run = async (client, message, args, pool) => {
                                                     currentStory = JSON.parse(currentStory)
 
                                                     if (currentStory === null) {
-                                                        let storyString = JSON.stringify(story)
-                                                        return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
+                                                        let newStorArray = []
+                                                        newStorArray.push(story)
+                                                        let newJSON = JSON.stringify(newStorArray)
+                                                        //let storyString = JSON.stringify(story)
+                                                        return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
                                                     } else {
 
                                                         let newStorArray = []

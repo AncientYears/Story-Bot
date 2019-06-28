@@ -13,12 +13,14 @@ module.exports.run = async (client, message, args, pool) => {
 
     pool.query(`SELECT * FROM stories`, function (error, results, fields) {
       if (error) throw error;
-      for (i = 0; i < results.length; i++) {
-        if (results[i].storyJSON) {
+      for (let row of results) {
+        if (row.storyJSON) {
 
-          let pages = JSON.parse(results[i].storyJSON)
-          console.log(pages.length)
-          let page = 1
+          let pages = JSON.parse(row.storyJSON)
+          let flatPages = Object.assign({}, pages)
+
+          console.log(flatPages)
+        let page = 1
           
           selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
           embedMessage.edit(selectStoryEmbed)
