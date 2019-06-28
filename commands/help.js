@@ -5,12 +5,12 @@ module.exports.run = async (client, message, args) => {
     let helpEmbed = new discord.RichEmbed()
     .setAuthor('Help', client.user.displayAvatarURL)    
     .setColor('GREEN')
-    .addField('To view the stored stories, use: ', '?story')
-    .setDescription('Sorted by new (fetched from database)')
+    .addField('To view the stored stories, use ?story ', "***THIS IS WIP AND YOU SHOULDN'T USE THIS YET!***")
     .addField('To create your own story, use: ', '?createstory')
-    .setDescription('The format is by pasting parts of the story in order,\nTitle, Plot, Introduction, Climax, Conclusion.')
+    .addBlankField()
+    .addField('The format is by pasting parts of the story in order: ', 'Title, Plot, Introduction, Climax, Conclusion.')
+    .addBlankField()
     .addField('To ping, use: ', '?ping')
-    .setDescription('Testing purposes.')
 
     message.channel.send(helpEmbed)
     }
