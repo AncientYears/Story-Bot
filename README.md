@@ -1,7 +1,7 @@
 # Story-Bot
 
-This is a story-bot written by bailey-f and Ancient.
-The premise of the bot is a user can create, store and view their stories as well as other stories by other authors who have submitted their stories via the same bot.
+This is a short story bot written by bailey-f and Ancient.
+The premise of the bot is a user can create, store and view their short stories as well as other short stories by other authors who have submitted their short stories via the same bot.
 
 # Usage:
 ```
@@ -30,6 +30,8 @@ The premise of the bot is a user can create, store and view their stories as wel
 # Reminder
 
 Please keep in mind this bot was programmed by two beginners in the space of 2/3 days. It is not the best, but it is a way for us both to learn the language, package manager and API wrappers we used. Above all we had a lot of fun on this project and will likely continue developing it after the Discord Hack Week.
+
+Discord has a 1024 embed text limit, and a 2000 non-embed text limit, so please be weary that anything over 1024 characters will break! 
 
 # Invite the bot to your own server
 
