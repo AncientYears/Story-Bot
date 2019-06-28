@@ -60,11 +60,14 @@ module.exports.run = async (client, message, args, pool) => {
     })
 
   } if(args[1]){
-    let specifiedAuthor = message.guild.members.get(args[0])
+    let userID = args[0].split("@").pop()
+    userID = userID.split(">").shift()
+    console.log(userID)
+    let specifiedAuthor = message.guild.members.get(userID)
     let specificStoryEmbed = new discord.RichEmbed()
     .setColor('GREEN')
     .setAuthor(args[1], specifiedAuthor.user.displayAvatarURL)
-    pool.query(`SELECT * FROM stories WHERE id = '${args[0]}'`, function (error, results, fields) {
+    pool.query(`SELECT * FROM stories WHERE id = '${userID}'`, function (error, results, fields) {
       if(error) throw error;
               let storyStorage = []
               for(i = 0; i < results.length; i++){
@@ -89,13 +92,14 @@ module.exports.run = async (client, message, args, pool) => {
       
   }
   else if(args[0]){
-    let specifiedAuthor = message.guild.members.get(args[0])
+    let userID = args[0].split("@").pop()
+    userID = userID.split(">").shift()
+    console.log(userID)
+    let specifiedAuthor = message.guild.members.get(userID)
     let specificStoryEmbed = new discord.RichEmbed()
-
-    .setAuthor(specifiedAuthor.user.username + "'s stories", specifiedAuthor.user.displayAvatarURL)
     .setColor('GREEN')
-    console.log(args[0])
-    pool.query(`SELECT * FROM stories WHERE id = '${args[0]}'`, function (error, results, fields) {
+    .setAuthor(specifiedAuthor.user.username + "'s stories", specifiedAuthor.user.displayAvatarURL)
+    pool.query(`SELECT * FROM stories WHERE id = '${userID}'`, function (error, results, fields) {
         if(error) throw error;
         let storyStorage = []
         for(i = 0; i < results.length; i++){
