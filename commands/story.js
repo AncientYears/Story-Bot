@@ -59,12 +59,39 @@ module.exports.run = async (client, message, args, pool) => {
     });
     })
 
-  } else if (args.join(' ')) {
-    // Search for the story in the json file 
-    console.log(storiesJSON)
-    message.channel.send(args.join(' '))
-  }
+  } if(args[0]){
+    let specifiedAuthor = message.guild.members.get(args[0])
+    console.log(specifiedAuthor)
+    let specificStoryEmbed = new discord.RichEmbed()
+
+    .setAuthor(specifiedAuthor.user.username + "'s stories", specifiedAuthor.user.displayAvatarURL)
+    .setColor('GREEN')
+    console.log(args[0])
+    pool.query(`SELECT * FROM stories WHERE id = '${args[0]}'`, function (error, results, fields) {
+        if(error) throw error;
+        let storyStorage = []
+        for(i = 0; i < results.length; i++){
+            if(results[i].storyJSON){
+                let storyObj = JSON.parse(results[i].storyJSON.split(","))
+                for(i = 0; i < storyObj.length; i++) {
+                    console.log(storyObj[i])
+                    storyStorage.push(storyObj[i])
+                }   
+            }
+            
+        }
+        for(i = 0; i < storyStorage.length; i++){
+            if(args[0]){   
+                specificStoryEmbed.addField(storyStorage[i].title, storyStorage[i].plot)
+            }
+        }
+        message.channel.send(specificStoryEmbed)
+        
+    })
 }
+}
+
+
 
 module.exports.help = {
   name: 'story',
