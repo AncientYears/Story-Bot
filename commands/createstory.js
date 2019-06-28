@@ -83,11 +83,8 @@ module.exports.run = async (client, message, args, pool) => {
                                                     currentStory = JSON.parse(currentStory)
 
                                                     if (currentStory === null) {
-                                                        let newStorArray = []
-                                                        newStorArray.push(story)
-                                                        let newJSON = JSON.stringify(newStorArray)
-                                                        //let storyString = JSON.stringify(story)
-                                                        return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
+                                                        let storyString = JSON.stringify(story)
+                                                        return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
                                                     } else {
 
                                                         let newStorArray = []

@@ -18,6 +18,7 @@ module.exports.run = async (client, message, args, pool) => {
       for(i = 0; i < results.length; i++){
         if(results[i].storyJSON){
           pages = JSON.parse(results[i].storyJSON.split(","))
+          console.log(pages)
         }
       }
       for (i = 0; i < pages.length; i++) {
