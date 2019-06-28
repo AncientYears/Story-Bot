@@ -22,7 +22,7 @@ The premise of the bot is a user can create, store and view their short stories 
 
 ?mystories - provides a list of the own users stories
 
-?story - provides a list of all stories sorted by new
+** ?story - provides a list of all stories sorted by new ** this is a WIP feature that is still very buggy, don't attempt to use this, instead, use below**
 
     ?story @user - provides a list of all stories by that user
     ?story @user storyname - provides a viewing platform for that specific story
