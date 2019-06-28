@@ -2,16 +2,16 @@
 
 This is a short story bot written by **bailey-f**
 
-    [Github](https://github.com/bailey-f)
-    [Twitter](https://twitter.com/bailey_wsf)
-    [Discord](https://discordapp.com)
+[Github](https://github.com/bailey-f)
+[Twitter](https://twitter.com/bailey_wsf)
+[Discord](https://discordapp.com)
         **bailey#2070**
 
 
  and **Ancient**
 
-    [Github](https://github.com/Ancient)
-    [Discord](https://discordapp.com)
+[Github](https://github.com/Ancient)
+[Discord](https://discordapp.com)
         **Ancient#7404**
 
 The premise of the bot is a user can create, store and view their short stories as well as other short stories by other authors who have submitted their short stories via the same bot.
