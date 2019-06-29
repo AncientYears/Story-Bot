@@ -1,55 +1,58 @@
 const discord = module.require("discord.js")
 
+
+module.exports = { stories: allStories }
+
 module.exports.run = async (client, message, args, pool) => {
-    if (!args[0]) { // command ran by itself
+    if (!args[0]) {
 
-        let filter = m => m.author.id == message.author.id; // filter
+        let filter = m => m.author.id == message.author.id;
 
-        let createStory = new discord.RichEmbed() // embed
+        let createStory = new discord.RichEmbed()
             .setAuthor('Create A New Title', client.user.displayAvatarURL)
             .setDescription('Create a new title for your story (make this brief and catchy!)')
             .setColor('GREEN')
-        message.channel.send(createStory) // send embed
+        message.channel.send(createStory)
 
-        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }) // await messages :) 
+        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
             .then(collected => {
-                let mappedTitle = collected.map(message => message.content).join()  // Record their answer & use later.
+                let mappedTitle = collected.map(message => message.content).join()
 
                 createStory.setAuthor('Create A New Plot', client.user.displayAvatarURL),
                     createStory.setDescription('Write a new plot for your story (bear in mind the character limit is 2000!)')
                 message.channel.send(createStory)
 
 
-                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }) // await messages :) 
+                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                     .then(collected => {
-                        mappedPlot = collected.map(message => message.content).join()  // Record their answer & use later.
+                        mappedPlot = collected.map(message => message.content).join()
 
                         createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
                             createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
                         message.channel.send(createStory)
 
-                        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }) // await messages :) 
+                        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                             .then(collected => {
-                                let mappedIntro = collected.map(message => message.content).join()  // Record their answer & use later.
+                                let mappedIntro = collected.map(message => message.content).join()
 
 
                                 createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
                                     createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 2000!)'),
                                     message.channel.send(createStory)
 
-                                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }) // await messages :) 
+                                message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                     .then(collected => {
-                                        let mappedClimax = collected.map(message => message.content).join()  // Record their answer & use later.
+                                        let mappedClimax = collected.map(message => message.content).join()
 
                                         createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
                                             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
                                         message.channel.send(createStory)
 
-                                        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] }) // await messages :) 
+                                        message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                             .then(collected => {
-                                                let mappedConclusion = collected.map(message => message.content).join() // Record their answer & use later.
+                                                let mappedConclusion = collected.map(message => message.content).join()
 
-                                                let createStoryEmbed = new discord.RichEmbed() // inform user of their success in story creation.
+                                                let createStoryEmbed = new discord.RichEmbed()
                                                     .setAuthor('Author', message.author.displayAvatarURL)
                                                     .addField('Title: ', mappedTitle)
                                                     .addField('Plot: ', '\n' + mappedPlot)
@@ -58,9 +61,9 @@ module.exports.run = async (client, message, args, pool) => {
                                                     .addField('Conclusion: ', '\n' + mappedConclusion)
                                                     .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
                                                     .setColor('GREEN')
-                                                message.channel.send(createStoryEmbed) // Informed..
+                                                message.channel.send(createStoryEmbed)
 
-                                                var story = { // the recorded story.
+                                                var story = {
                                                     "author": message.author.tag,
                                                     "title": mappedTitle,
                                                     "plot": mappedPlot,
@@ -68,27 +71,26 @@ module.exports.run = async (client, message, args, pool) => {
                                                     "climax": mappedClimax,
                                                     "conclusion": mappedConclusion,
                                                 }
-                                                pool.query(`SELECT * FROM stories WHERE id = '${message.author.id}'`, function (error, results, fields) { // database query to find user stories
+                                                console.log(story)
+                                                pool.query(`SELECT * FROM stories WHERE id = '${message.author.id}'`, function (error, results, fields) {
                                                     if (error) throw error;
 
-                                                    let currentStory = results[0].storyJSON // find their story.
-                                                    currentStory = JSON.parse(currentStory) // parse it
+                                                    let currentStory = results[0].storyJSON
+                                                    currentStory = JSON.parse(currentStory)
 
                                                     if (currentStory === null) {
-                                                        // they have no story
-                                                        // stringify story and send to database
                                                         let storyString = JSON.stringify(story)
                                                         return pool.query(`UPDATE stories SET storyJSON = '${storyString}' WHERE id = '${message.author.id}'`)
                                                     } else {
-                                                        // they already have a story
+
                                                         let newStorArray = []
-                                                        newStorArray.push(currentStory, story) // Push the old and new stories into array.
-                                                        let merged = [].concat.apply([], newStorArray); // Flattens array into one object.
-                                                        let newJSON = JSON.stringify(merged) // Stringify array
-                                                        return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`) // Send to database
+                                                        newStorArray.push(currentStory, story)
+                                                        let merged = [].concat.apply([], newStorArray);
+                                                        let newJSON = JSON.stringify(merged)
+                                                        return pool.query(`UPDATE stories SET storyJSON = '${newJSON}' WHERE id = '${message.author.id}'`)
                                                     }
                                                 })
-                                                 // Some error catching below here.
+
                                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
                                     }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
                             }).catch(e => message.reply('Time is up, you can find your draft using ?mystories') && console.log(e))
