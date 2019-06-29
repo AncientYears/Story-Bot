@@ -26,7 +26,8 @@ module.exports.run = async (client, message, args, pool) => {
           selectStoryEmbed.addField(merged[i].title, merged[i].author)
         }
       }
-          selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
+      let pagesneeded = Math.ceil(merged.length/3)
+          selectStoryEmbed.setFooter('Page: ' + page + ' of ' + (pagesneeded))
           embedMessage.edit(selectStoryEmbed)
 
             embedMessage.react('◀').then(r => {
