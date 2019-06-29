@@ -2,7 +2,7 @@ const discord = module.require("discord.js")
 
 module.exports.run = async (client, message, args, pool) => {
   if (!args[0]) {
-    let pageStories = []
+    /*let pageStories = []
     let pages = []
     let page = 1
     let perPage = 3
@@ -75,8 +75,10 @@ module.exports.run = async (client, message, args, pool) => {
           })
     })
     })
-
-  } if (args[1]) {
+    */
+   message.channel.send('This feature is currently in WIP and does not work.')
+  }
+  if (args[1]) {
     let totalargs = []
     args.forEach(element => {
       if (!(element == args[0]))
