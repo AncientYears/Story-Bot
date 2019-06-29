@@ -6,6 +6,8 @@ module.exports.run = async (client, message, args) => {
     .setAuthor('Help', client.user.displayAvatarURL)    
     .setColor('GREEN')
     .addField('To view the stored stories, use ?story ', "***THIS IS WIP AND YOU SHOULDN'T USE THIS YET!***")
+    .addField('To view the stored user stories, use ?story @user or ?story @user <story>', 'This works, however ?story alone is in development.')
+    .addField('To view your stories, use', '?mystories')
     .addField('To create your own story, use: ', '?createstory')
     .addBlankField()
     .addField('The format is by pasting parts of the story in order: ', 'Title, Plot, Introduction, Climax, Conclusion.')

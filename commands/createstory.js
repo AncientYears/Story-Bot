@@ -23,35 +23,35 @@ module.exports.run = async (client, message, args, pool) => {
                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                     .then(collected => {
                         mappedPlot = collected.map(message => message.content).join()
-                        if (mappedTitle.length > 1000) return message.reply('Summary too long, Max 1000 characters!')
+                        if (mappedPlot.length > 1000) return message.reply('Summary too long, Max 1000 characters!')
 
                         createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
-                            createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
+                            createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 1000!)')
                         message.channel.send(createStory)
 
                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                             .then(collected => {
                                 let mappedIntro = collected.map(message => message.content).join()
-                                if (mappedTitle.length > 1000) return message.reply('Introduction too long, Max 1000 characters!')
+                                if (mappedIntro.length > 1000) return message.reply('Introduction too long, Max 1000 characters!')
 
 
                                 createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
-                                    createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 2000!)'),
+                                    createStory.setDescription('Write a new climax to your story (bear in mind the character limit is 1000!)'),
                                     message.channel.send(createStory)
 
                                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                     .then(collected => {
                                         let mappedClimax = collected.map(message => message.content).join()
-                                        if (mappedTitle.length > 1000) return message.reply('Climax too long, Max 1000 characters!')
+                                        if (mappedClimax.length > 1000) return message.reply('Climax too long, Max 1000 characters!')
 
                                         createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
-                                            createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
+                                            createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 1000!)')
                                         message.channel.send(createStory)
 
                                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                             .then(collected => {
                                                 let mappedConclusion = collected.map(message => message.content).join()
-                                                if (mappedTitle.length > 1000) return message.reply('Conclusion too long, Max 1000 characters!')
+                                                if (mappedConclusion.length > 1000) return message.reply('Conclusion too long, Max 1000 characters!')
 
                                                 let createStoryEmbed = new discord.RichEmbed()
                                                     .setAuthor('Author', message.author.displayAvatarURL)
@@ -60,7 +60,7 @@ module.exports.run = async (client, message, args, pool) => {
                                                     .addField('Introduction: ', '\n' + mappedIntro)
                                                     .addField('Climax: ', '\n' + mappedClimax)
                                                     .addField('Conclusion: ', '\n' + mappedConclusion)
-                                                    .setDescription('?story <story> - Views a story\n?createstory - Creates a story')
+                                                    .setDescription('?story @user - Views all users stories!\n?story @user <story> - Views someones story\n?createstory - Creates a story')
                                                     .setColor('GREEN')
                                                 message.channel.send(createStoryEmbed)
 
