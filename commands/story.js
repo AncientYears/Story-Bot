@@ -65,6 +65,7 @@ module.exports.run = async (client, message, args, pool) => {
               for (i = perPage-3; i < perPage; i++) {
                 for (iv = 0; iv < 3; iv++) {
                   if (i < merged.length) { 
+                    console.log(merged[i])
                   selectStoryEmbed.fields[iv].name = merged[i].title 
                selectStoryEmbed.fields[iv].value = merged[i].author
                   }
