@@ -48,7 +48,7 @@ Please keep in mind this bot was programmed by two beginners in the space of 2/3
 
 Discord has a 1024 embed text limit, and a 2000 non-embed text limit, so please be weary that anything over 1024 characters will break! 
 
-# Invite the bot to your own server
+# Invite the bot to your own server + (To the judges of Hack Week) - You must invite this bot instead of downloading it, otherwise it will not connect to our SQL servers!
 
 https://discordapp.com/oauth2/authorize?client_id=591745225102196749&scope=bot&permissions=1074129984
 
