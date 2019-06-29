@@ -41,12 +41,12 @@ module.exports.run = async (client, message, args, pool) => {
 
             backwards.on('collect', r => {
               if (page === 1) return;
+              r.remove(message.author.id)
               page--;
               perPage -= 3
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
               for (i = perPage-3; i < perPage; i++) {
                 for (iv = 0; iv < 3; iv++) {
-                  console.log(selectStoryEmbed.fields)
                   selectStoryEmbed.fields[iv].name = merged[i].title 
                selectStoryEmbed.fields[iv].value = merged[i].author
 
@@ -57,19 +57,20 @@ module.exports.run = async (client, message, args, pool) => {
 
             forwards.on('collect', r => {
               if (page === pages.length) return;
+              r.remove(message.author.id)
               page++;
               perPage += 3
               selectStoryEmbed.setFooter('Page: ' + page + ' of ' + pages.length)
               for (i = perPage-3; i < perPage; i++) {
                 for (iv = 0; iv < 3; iv++) {
-                  console.log(selectStoryEmbed.fields)
+                  if (i < merged.length) { 
                   selectStoryEmbed.fields[iv].name = merged[i].title 
                selectStoryEmbed.fields[iv].value = merged[i].author
-
+                  }
               }
-              embedMessage.edit(selectStoryEmbed)
             }
-            })
+            embedMessage.edit(selectStoryEmbed)
+          })
     })
     })
 
