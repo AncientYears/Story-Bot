@@ -1,8 +1,5 @@
 const discord = module.require("discord.js")
 
-
-module.exports = { stories: allStories }
-
 module.exports.run = async (client, message, args, pool) => {
     if (!args[0]) {
 
@@ -17,15 +14,16 @@ module.exports.run = async (client, message, args, pool) => {
         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
             .then(collected => {
                 let mappedTitle = collected.map(message => message.content).join()
-
-                createStory.setAuthor('Create A New Plot', client.user.displayAvatarURL),
-                    createStory.setDescription('Write a new plot for your story (bear in mind the character limit is 2000!)')
+                if (mappedTitle.length > 100) return message.reply('Title too long, Max 100 characters!')
+                createStory.setAuthor('Create A New Summary', client.user.displayAvatarURL),
+                    createStory.setDescription('Write a new summary for your story (bear in mind the character limit is 1000!)')
                 message.channel.send(createStory)
 
 
                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                     .then(collected => {
                         mappedPlot = collected.map(message => message.content).join()
+                        if (mappedTitle.length > 1000) return message.reply('Summary too long, Max 1000 characters!')
 
                         createStory.setAuthor('Create A New Introduction', client.user.displayAvatarURL),
                             createStory.setDescription('Write a new introduction to your story (bear in mind the character limit is 2000!)')
@@ -34,6 +32,7 @@ module.exports.run = async (client, message, args, pool) => {
                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                             .then(collected => {
                                 let mappedIntro = collected.map(message => message.content).join()
+                                if (mappedTitle.length > 1000) return message.reply('Introduction too long, Max 1000 characters!')
 
 
                                 createStory.setAuthor('Create A New Climax', client.user.displayAvatarURL),
@@ -43,6 +42,7 @@ module.exports.run = async (client, message, args, pool) => {
                                 message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                     .then(collected => {
                                         let mappedClimax = collected.map(message => message.content).join()
+                                        if (mappedTitle.length > 1000) return message.reply('Climax too long, Max 1000 characters!')
 
                                         createStory.setAuthor('Create A New Conclusion', client.user.displayAvatarURL),
                                             createStory.setDescription('Write a new conclusion to your story (bear in mind the character limit is 2000!)')
@@ -51,6 +51,7 @@ module.exports.run = async (client, message, args, pool) => {
                                         message.channel.awaitMessages(filter, { max: 1, time: 300000, errors: ['time'] })
                                             .then(collected => {
                                                 let mappedConclusion = collected.map(message => message.content).join()
+                                                if (mappedTitle.length > 1000) return message.reply('Conclusion too long, Max 1000 characters!')
 
                                                 let createStoryEmbed = new discord.RichEmbed()
                                                     .setAuthor('Author', message.author.displayAvatarURL)
