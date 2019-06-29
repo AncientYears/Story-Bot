@@ -52,4 +52,7 @@ Discord has a 1024 embed text limit, and a 2000 non-embed text limit, so please 
 
 https://discordapp.com/oauth2/authorize?client_id=591745225102196749&scope=bot&permissions=1074129984
 
+Discord Hack-Week After-event Community:
+https://discord.gg/vaHygap
+
 If you have any issues/bugs to report please do so via discord, add bailey#2070 or Ancient#7404
