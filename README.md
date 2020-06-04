@@ -3,7 +3,6 @@
 This is a short story bot written by **bailey-f**
 
 [Github](https://github.com/bailey-f)
-[Twitter](https://twitter.com/bailey_wsf)
 [Discord](https://discordapp.com)
         **bailey#2070**
 
